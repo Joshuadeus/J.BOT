@@ -1,4 +1,19 @@
-
+const sock = makeWASocket({
+  auth: state,
+  logger: pino({ level: "silent" }),
+  printQRInTerminal: false
+}); if (!state.creds.registered) {
+  setTimeout(async () => {
+    try {
+      const code = await sock.requestPairingCode(
+        process.env.PHONE_NUMBER
+      );
+      console.log("JAY BOT PAIRING CODE:", code);
+    } catch (error) {
+      console.log("Pairing error:", error.message);
+    }
+  }, 3000);
+}
 const {
   default: makeWASocket,
   useMultiFileAuthState,
